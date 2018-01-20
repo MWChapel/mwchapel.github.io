@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BGG For MWChapel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<nav class="navbar zero-radius navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">BGG Auction Search Tool</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" ng-model="userName" placeholder="BGG Username">
+            </div>
+            <button ng-disabled="!userName" ng-click="searchAuctions()" class="btn btn-default">Search</button>
+        </div>
+    </div>
+  </div>
+</nav>
+<div class="container">
+        <div class="panel mt-15 panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                  <div class="col-xs-1">
+                      <div class="text-center" ng-if="isLoading">
+                          <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+                          <span class="sr-only">Loading...</span>
+                      </div>
+                  </div>
+                  <div class="col-xs-2 text-left p-5">
+                      <strong>
+                          Auction Item
+                      </strong>
+                  </div>
+                  <div class="col-xs-3 text-center p-5">
+                      <strong>
+                          Seller
+                      </strong>
+                  </div>
+                  <div class="col-xs-1 text-center p-5">
+                      <strong>
+                         Research
+                      </strong>
+                  </div>
+                  <div class="col-xs-2 text-left p-5">
+                      <strong>
+                         Last Comment
+                      </strong>
+                  </div>
+                  <div class="col-xs-3 text-left p-5">
+                      <strong>
+                          Description
+                      </strong>
+                  </div>
+              </div>
+          </div>
+          <div class="panel-body list-panel">
+              <div class="row b-b" ng-repeat="item in foundForSale | orderBy:'name'">
+                  <div ng-if="item && item.img" class="col-xs-1 p-5">
+                      <img ng-src={{item.img}}  class="pull-right img-responsive" width="40" onerror='this.style.display = "none"'>
+                      <img ng-src={{item.imgalt}}  class="pull-right img-responsive" width="40" onerror='this.style.display = "none"'>
+                  </div>
+                  <div class="col-xs-2 text-left p-5">
+                      <a href={{item.url}} target="_blank">
+                          <strong>
+                              {{item.name}}
+                          </strong>
+                      </a>
+                  </div>
+                  <div class="col-xs-3 text-left p-5">
+                      <div class="col-xs-2 pl-0 pr-0">
+                          <img ng-src={{item.user.user.avatarlink._value}} class="pull-right img-responsive" onerror='this.style.display = "none"'>
+                      </div>
+                      <div class="col-xs-8">
+                          <strong class="text-info">
+                             {{item.user.user._name}}
+                          </strong>
+                          <div class="description-font">
+                            {{item.user.user.stateorprovince._value}} {{item.user.user.country._value}} 
+                          </div>
+                          <div class="tiny-font">
+                            {{item.sentiment.string}}  
+                          </div>
+                      </div>
+                      <div class="col-xs-2">
+                          <i ng-if="item.sentiment.score === 2" class="fa fa fa-2x fa-smile-o text-success" title="Proven record of Transactions, very little risk"> </i>
+                          <i ng-if="item.sentiment.score === 1" class="fa fa fa-2x fa-meh-o text-warning" title="A small record of Transactions, somewhat risky"> </i>
+                          <i ng-if="item.sentiment.score === 0" class="fa fa fa-2x fa-frown-o text-danger" title="New users without a proven record, very risky"> </i>
+                      </div>
+                  </div>
+                  <div class="col-xs-1 text-center p-5">
+                      <button class="btn btn-info tiny-button-padding" ng-click="getMarketHistory(item.gameId)" data-toggle="tooltip" data-placement="top" title="BGG Marketplace Historical Prices">
+                          <i class="tiny-button-font">BGG Market</i>
+                      </button>
+                  </div>
+                  <div  ng-class="['col-xs-2 text-left p-5 description-font', {'text-warning' : item.issold }]">
+                      <div ng-if="item.issold">
+                          <i class="fa fa-meh-o" aria-hidden="true"> Indicating Sold!</i>
+                      </div>
+                      {{removeBracketText(item.lastcomment)}}
+                  </div>
+                  <div class="col-xs-3 text-left p-5 description-font">
+                      <div ng-if="item.isbin">
+                          <i class="fa fa-star text-success" aria-hidden="true"> BIN Available</i>
+                      </div>
+                      <div ng-if="!item.isbin">
+                          <i class="fa fa-thumbs-down text-danger" aria-hidden="true"> No BIN Available!</i>
+                      </div>
+                      {{removeBracketText(item.text)}}
+                  </div>
+              </div>
+          </div>
+        </div>
+</div>
+<modal-dialog show='showMarketPlace' ng-cloak>
+
+          <div class="modal-content modal-header dialog-modal">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">BGG Marketplace Historical Pricing for {{gameName}}</h4>
+          </div>
+          <div class="modal-content modal-body dialog-modal p-0">
+              <div class="panel panel-primary dialog-panel">
+                <div class="panel-heading dialog-panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3 text-left description-font p-5 pl-15">
+                            <strong>
+                                Sell Date
+                            </strong>
+                        </div>
+                        <div class="col-xs-2 text-left description-font p-5">
+                            <strong>
+                                Sell Price
+                            </strong>
+                        </div>
+                        <div class="col-xs-2 text-left description-font p-5">
+                            <strong>
+                               Condition
+                            </strong>
+                        </div>
+                        <div class="col-xs-5 text-left description-font p-5">
+                            <strong>
+                              Notes
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body marketplace-body">
+                    <div class="row b-b" ng-repeat="item in soldItems | orderBy:'-saledate'">
+                        <div class="col-xs-3 text-left description-font p-5 pl-15">
+                            {{convertToDate(item.saledate) | date:'MM/dd/yyyy'}}
+                        </div>
+                        <div class="col-xs-2 text-left description-font p-5">
+                            {{item.currencysymbol}}{{item.price}}{{item.currency}}
+                        </div>
+                        <div class="col-xs-2 text-left description-font p-5">
+                            {{item.condition}}
+                        </div>
+                        <div class="col-xs-5 text-left description-font p-5">
+                            {{removeBracketText(item.notes)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-content modal-footer dialog-modal">
+            <button type="button" class="btn btn-info" ng-click="toggleShowModal()">Close</button>
+          </div>
+</modal-dialog>
+</body>
+</html>

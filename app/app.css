@@ -1,0 +1,143 @@
+.pl-0 {
+    padding-left: 0px !important;
+}
+.pl-15 {
+    padding-left: 15px !important;
+}
+
+.pr-0 {
+    padding-left: 0px !important;
+}
+.p-5 {
+    padding: 5px !important;
+}
+.p-0 {
+    padding: 0px !important;
+}
+.p-1 {
+    padding: 1px !important;
+}
+.p-15 {
+    padding: 15px !important;
+}
+.p-20 {
+    padding: 20px !important;
+}
+
+.mt-15 {
+    margin-top: 15px !important;
+}
+
+.container {
+    width: 95% !important;
+    margin-top: 15px;
+}
+
+.green-text {
+    color: #1ea020;
+}
+
+.red-text {
+    color: #e80b0b;
+}
+
+.yellow-text {
+    color: #ead007;
+}
+ 
+.b-b {
+    border-bottom: 1px solid #446e9b 
+}
+
+.description-font {
+    font-size: 80%;
+}
+
+.tiny-font {
+    font-size: 50%;
+}
+
+.tiny-button-font {
+    font-size: 70%;
+}
+
+.tiny-button-padding {
+    padding: 5px !important;
+}
+
+a,
+.btn,
+.navbar-inner,
+.btn-navbar,
+.btn-info,
+.btn-primary,
+.panel-heading,
+.navbar,
+.progress,
+.progress .bar {
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.zero-radius {
+    border-radius: 0px !important;
+}
+
+.list-panel {
+    height: 600px;
+    overflow: auto;
+}
+
+.marketplace-body {
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+.dialog-panel {
+    margin: 0px !important;
+    border: 0px !important;
+    border-radius: 0px !important;
+}
+
+.dialog-modal {
+    margin: 0px !important;
+    border-radius: 0px !important;
+}
+
+.dialog-panel-heading {
+    margin: 0px !important;
+    border: 0px !important;
+    border-radius: 0px !important;
+}
+
+.ng-modal-dialog {
+  z-index: 10000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  border-radius: 0px !important;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-shadow: 4px 4px 80px #000;
+  -webkit-box-shadow: 4px 4px 80px #000;
+  -moz-box-shadow: 4px 4px 80px #000;
+  -ms-box-shadow: 4px 4px 80px #000;
+  -o-box-shadow: 4px 4px 80px #000;
+}
+
+.ng-modal-dialog-content {
+  overflow: hidden;
+  height: 100%;
+}
+
+.ng-modal-title {
+  font-weight: bold;
+  font-size: 200%;
+  display: block;
+  margin-bottom: 10px;
+}
